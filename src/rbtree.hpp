@@ -318,16 +318,11 @@ void RBTree::insertFixup(Node* pNode)
   Node* parent = nullptr;
   Node* grandParent = nullptr;
 
-  std::cout << "\nDEBUG[\n";
-  std::cout << "pNode:" << pNode << std::endl;
-  std::cout << "mp_root: " << mp_root << std::endl;
-  std::cout << "pNode->mp_parent: " << pNode->mp_parent << std::endl;
-  std::cout << "pNode->mp_parent->m_color: " << (int)pNode->mp_parent->m_color << std::endl;
-  std::cout << "\nUNDEBUG[\n";
   while(pNode->m_color == Color::RED && pNode->mp_parent->m_color == Color::RED) {
     parent = pNode->mp_parent;
     grandParent = parent->mp_parent;
 
+    if(parent->m_color != Color::BLACK) {
     if(grandParent != nullptr && parent == grandParent->mp_left) 
     {
       std::cout << "in left branch\n";
@@ -372,6 +367,7 @@ void RBTree::insertFixup(Node* pNode)
         pNode->mp_parent->mp_parent->m_color = Color::RED;
         leftRotate(pNode->mp_parent->mp_parent);
       }
+    }
     }
   }
   mp_root->m_color = Color::BLACK;
